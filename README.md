@@ -1,1 +1,1 @@
-# onlineshoppingcart_project using JSP & Servlet (MVC)
+# onlineshoppingcart-project using JSP & Servlet (MVC)
