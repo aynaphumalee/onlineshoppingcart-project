@@ -40,6 +40,11 @@
             padding: 20px; 
             border-radius: 10px;
         }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
     </style>
 
     <jsp:useBean id="catalog" class="model.Catalog" scope="request"/>
