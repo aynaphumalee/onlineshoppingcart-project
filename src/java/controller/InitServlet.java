@@ -24,8 +24,6 @@ import javax.servlet.http.HttpSession;
  */
 public class InitServlet extends HttpServlet {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineShoppingCartPU");
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,9 +35,6 @@ public class InitServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        EntityManager em = emf.createEntityManager(); //สร้าง object ของ EntityManager
-        HttpSession session = request.getSession(); //สร้าง session
-        session.setAttribute("entitymanager", em);  //set Attribute ระดับ session เพื่อให้ component ทุกตัวเข้าถึง session นี้
         request.getRequestDispatcher("index.jsp").forward(request, response); //ส่งการทำงานต่อไปยัง main menu
     }
 
@@ -81,19 +76,5 @@ public class InitServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    public void persist(Object object) {
-        EntityManager em = emf.createEntityManager();
-        try {
-            em.getTransaction().begin();
-            em.persist(object);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", e);
-            em.getTransaction().rollback();
-        } finally {
-            em.close();
-        }
-    }
 
 }

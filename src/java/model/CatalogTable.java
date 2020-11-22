@@ -5,8 +5,13 @@
  */
 package model;
 
+import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -14,8 +19,12 @@ import javax.persistence.EntityManager;
  */
 public class CatalogTable {
 
-    public static Vector<Catalog> findAllCatalog(EntityManager em) {
-        Vector<Catalog> catalogList = null;
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineShoppingCartPU");
+
+    public static List<Catalog> findAllCatalog() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineShoppingCartPU");
+        EntityManager em = emf.createEntityManager();
+        List<Catalog> catalogList = null;
         try {
             catalogList = (Vector<Catalog>) em.createNamedQuery("Catalog.findAll").getResultList();
             //em.close();
@@ -23,11 +32,16 @@ public class CatalogTable {
         } catch (Exception e) {
             //Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", e);
             throw new RuntimeException(e);
+        } finally {
+            em.close();
+            emf.close();
         }
         return catalogList;
     }
 
-    public static Catalog findCatalogById(EntityManager em, int id) {
+    public static Catalog findCatalogById(int id) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineShoppingCartPU");
+        EntityManager em = emf.createEntityManager();
         Catalog catalog = null;
         try {
             catalog = em.find(Catalog.class, id);
@@ -36,13 +50,18 @@ public class CatalogTable {
         } catch (Exception e) {
             //Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", e);
             throw new RuntimeException(e);
+        } finally {
+            em.close();
+            emf.close();
         }
         return catalog;
     }
 
     //public static int updateEmployee(EntityManager em, 
     //        UserTransaction utx, Employee emp) {
-    public static int updateCatalog(EntityManager em, Catalog catalog) {
+    public static int updateCatalog(Catalog catalog) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineShoppingCartPU");
+        EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
             Catalog target = em.find(Catalog.class, catalog.getId());
@@ -59,12 +78,17 @@ public class CatalogTable {
             //Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", e);
             throw new RuntimeException(e);
 
+        } finally {
+            em.close();
+            emf.close();
         }
         return 1;
 
     }
 
-    public static int removeCatalog(EntityManager em, int id) {
+    public static int removeCatalog(int id) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineShoppingCartPU");
+        EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
             Catalog target = em.find(Catalog.class, id);
@@ -77,11 +101,16 @@ public class CatalogTable {
             //Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", e);
             throw new RuntimeException(e);
 
+        } finally {
+            em.close();
+            emf.close();
         }
         return 1;
     }
 
-    public static int insertCatalog(EntityManager em, Catalog catalog) {
+    public static int insertCatalog(Catalog catalog) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineShoppingCartPU");
+        EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
             Catalog target = em.find(Catalog.class, catalog.getId());
@@ -94,6 +123,9 @@ public class CatalogTable {
             //Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", e);
             throw new RuntimeException(e);
 
+        } finally {
+            em.close();
+            emf.close();
         }
         return 1;
     }

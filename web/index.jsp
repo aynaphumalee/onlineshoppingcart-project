@@ -4,6 +4,7 @@
     Author     : Ayna
 --%>
 
+<%@page import="java.util.List"%>
 <%@page import="model.CatalogTable"%>
 <%@page import="java.util.Vector"%>
 <%@page import="java.util.Iterator"%>
@@ -43,8 +44,7 @@
 
     <jsp:useBean id="catalog" class="model.Catalog" scope="request"/>
     <%
-        EntityManager em = (EntityManager) session.getAttribute("entitymanager");
-        Vector<Catalog> catalogList = CatalogTable.findAllCatalog(em);
+        List<Catalog> catalogList = CatalogTable.findAllCatalog();
         Iterator<Catalog> itr = catalogList.iterator();
     %>
     <body>

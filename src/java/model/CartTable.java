@@ -7,7 +7,11 @@ package model;
 
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 /**
@@ -16,20 +20,29 @@ import javax.persistence.Query;
  */
 public class CartTable {
 
-    public static Vector<Cart> findAllCart(EntityManager em) {
-        Vector<Cart> cardList = null;
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineShoppingCartPU");
+
+    public static List<Cart> findAllCart() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineShoppingCartPU");
+        EntityManager em = emf.createEntityManager();
+        List<Cart> cardList = null;
         try {
-            cardList = (Vector<Cart>) em.createNamedQuery("Cart.findAll").getResultList();
+            cardList = (List<Cart>) em.createNamedQuery("Cart.findAll").getResultList();
             //em.close();
 
         } catch (Exception e) {
             //Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", e);
             throw new RuntimeException(e);
+        } finally {
+            em.close();
+            emf.close();
         }
         return cardList;
     }
 
-    public static Cart findCartById(EntityManager em, int id) {
+    public static Cart findCartById(int id) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineShoppingCartPU");
+        EntityManager em = emf.createEntityManager();
         Cart cart = null;
         try {
             cart = em.find(Cart.class, id);
@@ -38,11 +51,16 @@ public class CartTable {
         } catch (Exception e) {
             //Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", e);
             throw new RuntimeException(e);
+        } finally {
+            em.close();
+            emf.close();
         }
         return cart;
     }
 
-    public static List<Cart> findCartByIdCatalog(EntityManager em, Catalog idCatalog) {
+    public static List<Cart> findCartByIdCatalog(Catalog idCatalog) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineShoppingCartPU");
+        EntityManager em = emf.createEntityManager();
         List<Cart> cart = null;
         try {
             Query query = em.createNamedQuery("Cart.findByIdCatalog");
@@ -56,13 +74,18 @@ public class CartTable {
         } catch (Exception e) {
             //Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", e);
             throw new RuntimeException(e);
+        } finally {
+            em.close();
+            emf.close();
         }
         return cart;
     }
 
     //public static int updateEmployee(EntityManager em, 
     //        UserTransaction utx, Employee emp) {
-    public static int updateCart(EntityManager em, Cart cart) {
+    public static int updateCart(Cart cart) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineShoppingCartPU");
+        EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
             Cart target = em.find(Cart.class, cart.getId());
@@ -76,12 +99,17 @@ public class CartTable {
             //Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", e);
             throw new RuntimeException(e);
 
+        } finally {
+            em.close();
+            emf.close();
         }
         return 1;
 
     }
 
-    public static int removeCart(EntityManager em, int id) {
+    public static int removeCart(int id) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineShoppingCartPU");
+        EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
             Cart target = em.find(Cart.class, id);
@@ -94,11 +122,16 @@ public class CartTable {
             //Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", e);
             throw new RuntimeException(e);
 
+        } finally {
+            em.close();
+            emf.close();
         }
         return 1;
     }
 
-    public static int insertCart(EntityManager em, Cart cart) {
+    public static int insertCart(Cart cart) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineShoppingCartPU");
+        EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
             em.persist(cart);
@@ -107,6 +140,9 @@ public class CartTable {
             //Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", e);
             throw new RuntimeException(e);
 
+        } finally {
+            em.close();
+            emf.close();
         }
         return 1;
     }

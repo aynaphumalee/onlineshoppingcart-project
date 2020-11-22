@@ -37,24 +37,22 @@ public class OrderController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        EntityManager em = (EntityManager) session.getAttribute("entitymanager");
         
         Cart cart = new Cart();
 
         int id_catalog = Integer.parseInt(request.getParameter("idCatalog"));
-        Catalog catalog = CatalogTable.findCatalogById(em, id_catalog);
+        Catalog catalog = CatalogTable.findCatalogById(id_catalog);
 
-        List<Cart> old_cart = CartTable.findCartByIdCatalog(em, catalog);
+        List<Cart> old_cart = CartTable.findCartByIdCatalog(catalog);
         if (old_cart == null) {
             cart.setIdCatalog(catalog);
             cart.setQuantity(Integer.parseInt(request.getParameter("quantity")));
-            CartTable.insertCart(em, cart);
+            CartTable.insertCart(cart);
         } else {
             cart.setId(old_cart.get(0).getId());
             cart.setIdCatalog(catalog);
             cart.setQuantity(old_cart.get(0).getQuantity()+Integer.parseInt(request.getParameter("quantity")));
-            CartTable.updateCart(em, cart);
+            CartTable.updateCart(cart);
         }
         request.getRequestDispatcher("shoppingcart.jsp").forward(request, response);
     }
