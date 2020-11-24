@@ -40,7 +40,7 @@ public class CheckoutController extends HttpServlet {
             throws ServletException, IOException {
         double totalAmount = 0;
         List<Cart> cartList = CartTable.findAllCart();
-        Iterator<Cart> itr = cartList.iterator();
+        Iterator<Cart> itr = cartList.iterator(); //Iterator ใช้ทำงานกับ Collection ใช้จัดการกับ Collection พวกตำแหน่งปัจจุบัน และเหลือข้อมูลอีกกี่ตัวที่เหลือใน Collection 
         while (itr.hasNext()) {
             Cart cart = itr.next();
             totalAmount += (cart.getQuantity()*(cart.getIdCatalog().getPrice()));  

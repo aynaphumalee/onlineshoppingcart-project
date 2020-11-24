@@ -37,7 +37,7 @@ public class RemoveController extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         CartTable.removeCart(id);
 
-        request.getRequestDispatcher("removeorder.jsp").forward(request, response);
+        request.getRequestDispatcher("shoppingcart.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

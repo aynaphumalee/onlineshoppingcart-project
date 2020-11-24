@@ -40,11 +40,6 @@
             padding: 20px; 
             border-radius: 10px;
         }
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
     </style>
 
     <jsp:useBean id="catalog" class="model.Catalog" scope="request"/>
@@ -87,8 +82,8 @@
                                 out.println("<td> " + catalog.getRate() + "</td>");
                                 out.println("<td> " + catalog.getYears() + "</td>");
                                 out.println("<td> " + catalog.getPrice() + "</td>");
-                                out.println("<td><input class=\"form-control\" type=\"number\" name=\"quantity\" placeholder=\"Enter Quantity\" id=\"textsend\" onkeyup=\"success()\"></input></td>");
-                                out.println("<td><button class=\"btn btn-secondary\" type=\"submit\" name=\"addtocart\" id=\"button\" disabled><i class=\"fa fa-shopping-cart\" aria-hidden=\"true\"></i>AddToCart</button></td>");
+                                out.println("<td><input class=\"form-control\" type=\"number\" name=\"quantity\" placeholder=\"Enter Quantity\"></input></td>");
+                                out.println("<td><button class=\"btn btn-secondary\" type=\"submit\" name=\"addtocart\" id=\"button\"><i class=\"fa fa-shopping-cart\" aria-hidden=\"true\"></i>AddToCart</button></td>");
                                 out.println("</tr>");
                                 out.println("</form>");
                             }
@@ -104,14 +99,4 @@
 
         </div>
     </body>
-
-    <script type="text/javascript">
-        function success() {
-            if (document.getElementById("textsend").value === "") {
-                document.getElementById('button').disabled = true;
-            } else {
-                document.getElementById('button').disabled = false;
-            }
-        }
-    </script>
 </html>

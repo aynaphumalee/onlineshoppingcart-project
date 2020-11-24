@@ -35,7 +35,7 @@ public class InitServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("index.jsp").forward(request, response); //ส่งการทำงานต่อไปยัง main menu
+        request.getRequestDispatcher("index.jsp").forward(request, response); //ส่งการทำงานต่อไปยัง index.jsp
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

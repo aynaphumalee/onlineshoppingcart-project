@@ -26,7 +26,7 @@ public class CatalogTable {
         EntityManager em = emf.createEntityManager();
         List<Catalog> catalogList = null;
         try {
-            catalogList = (Vector<Catalog>) em.createNamedQuery("Catalog.findAll").getResultList();
+            catalogList = (List<Catalog>) em.createNamedQuery("Catalog.findAll").getResultList();
             //em.close();
 
         } catch (Exception e) {
